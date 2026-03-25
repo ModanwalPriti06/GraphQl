@@ -138,13 +138,26 @@ Response Above query - If User → show profile. If Post → show blog
 >[!Important]
 > Use __typename to uniquely identify objects in cache.
 
+# API rate limits
+- 100 requests per minute
+- If you send 101 requests, the API will return an error like: ``` "error": "Rate limit exceeded" ``` HTTP **429** Too Many Requests.
+- In Contentful GraphQL API: 55 requests per second per token (approx)
 
+# Query complexity limits
+Query complexity limits specify the amount of data a client can request from the GraphQL Content API in one request. You can currently request up to 11000 entities in one request.
 
+>[!Important]
+> When a client gets query complexity limited, the API responds with a **TOO_COMPLEX_QUERY** error.
 
+# Query size limits
+Query size limits specify the maximum size of the query parameter for GET requests and the total payload size for POST requests. This limit is 8kb.
+This limit includes whitespace and newline characters. Removing semantically unnecessary whitespaces and newline characters before sending a request can lower the query size. You can reduce the query size without manual editing using GraphQL minifiers, such as GQLMin.
 
+>[!Important]
+>When the query size of a request exceeds the limit, the API returns a **QUERY_TOO_BIG** error.
 
-
-
+# Rich Text
+By default a Rich Text field has a total **limit of 1000** linked entities of all supported types. This means that by default the links field in each Rich Text entry has a complexity of 1000.
 
 
 
