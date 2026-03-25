@@ -111,5 +111,30 @@ fragment ImageFields on Asset {
 
 # $isPreview
 
+# What is __typename in GraphQL?
+__typename is a built-in (meta) field in GraphQL that tells you the type of the object returned by the server.
+👉 You don’t define it — GraphQL gives it automatically.
 
+```
+{
+  search(text: "Aman") {
+    __typename
+    ... on User {
+      name
+    }
+    ... on Post {
+      title
+    }
+  }
+}
+```
+Response Above query - If User → show profile. If Post → show blog
+```
+[
+  { "__typename": "User", "name": "Aman" },
+  { "__typename": "Post", "title": "Hello World" }
+]
+```
+>[!Important]
+> Use __typename to uniquely identify objects in cache.
 
