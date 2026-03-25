@@ -77,3 +77,10 @@ window
 - contentType
 - size
 
+>[!Note]
+> Can 10 nested query
+
+>[!Important]
+> Body size 8kb
+
+
