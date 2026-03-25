@@ -2,7 +2,7 @@
 
 GraphQL is an open-source query language for APIs and a runtime that executes those queries on the serve.
 
-### GraphQL query used in Contentful GraphQL API to fetch data.
+## GraphQL query used in Contentful GraphQL API to fetch data.
 ```
 query {
   person(id: "6oSubFEQ0KsAKPGz939U9t") {
@@ -52,7 +52,7 @@ assetCollection {
 ```
 In Contentful, sys stands for System Metadata. It contains internal system information about the entry or asset.
 
-## Fetch data
+# Fetch data
 ```
 window
       .fetch(`https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}`, {
@@ -82,5 +82,33 @@ window
 
 >[!Important]
 > Body size 8kb
+
+# Fragnant Query
+In GraphQL, a fragment is used to reuse the same set of fields in multiple queries. It helps avoid repeating the same code again and again.
+```
+query {
+  blogPostCollection {
+    items {
+      title
+      slug
+      featuredImage {
+        ...ImageFields
+      }
+    }
+  }
+}
+
+fragment ImageFields on Asset {
+  url
+  title
+}
+```
+## Why Fragments are Useful Benefits:
+- Avoid duplicate code
+- Keep queries clean
+- Easy to maintain
+- Used a lot in large apps
+
+
 
 
