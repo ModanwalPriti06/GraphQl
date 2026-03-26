@@ -227,6 +227,38 @@ JSON Pass
 - ID! → type (! = required)
 - Passed separately from query
 
+> [!Important]
+> If two or more content type IDs would be transformed to the same type name, a COLLIDING_TYPE_NAMES error is returned
+
+> [!Important]
+> If the generated name collides with a reserved field name, a RESERVED_FIELD_NAME error is returned. Reserved field names are sys, contentfulMetadata and linkedFrom.
+
+# Fields
+GraphQL type fields are generated from the corresponding content type fields. Each type has three additional fields: ```sys```, ```contentfulMetadata``` and ```linkedFrom```.
+
+# Schema generation failure
+Schema generation fails when:
+
+- Two or more content type IDs would be transformed to the same type name.
+- Two or more field IDs on the same content type would be transformed to the same field name.
+- Any field ID would be transformed to sys, contentfulMetadata or linkedFrom field name.
+
+You cannot change the content type ID without regenerating the content type, so be aware of these restrictions while creating your content models.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
