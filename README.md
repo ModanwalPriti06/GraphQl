@@ -109,8 +109,6 @@ fragment ImageFields on Asset {
 - Easy to maintain
 - Used a lot in large apps
 
-# $isPreview
-
 # What is __typename in GraphQL?
 __typename is a built-in (meta) field in GraphQL that tells you the type of the object returned by the server.
 👉 You don’t define it — GraphQL gives it automatically.
@@ -157,19 +155,77 @@ This limit includes whitespace and newline characters. Removing semantically unn
 >When the query size of a request exceeds the limit, the API returns a **QUERY_TOO_BIG** error.
 
 # Rich Text
-By default a Rich Text field has a total **limit of 1000** linked entities of all supported types. This means that by default the links field in each Rich Text entry has a complexity of 1000.
+The complexity of the links property in a RichText field is equal to the sum of the maximum number of allowed linked entries and assets in the validation settings for the field.
+- By default a Rich Text field has a total **limit of 1000** linked entities of all supported types. This means that by default the links field in each Rich Text entry has a complexity of 1000.
 
+# Tags
+The ContentfulMetadata tags field calculates its complexity in a special way. The complexity of the tags property in the ContentfulMetadata field is 1 for every entry or asset being queried for. This complexity cost remains the same regardless of the number of tags returned.
+```
+query {
+  articleCollection(limit: 100) {
+    items{
+      title
+      contentfulMetadata {
+        tags {
+            id
+            name
+        }
+      }
+    }
+  }
+}
+```
+The query above can return up to 100 Articles and up to 100 tags (up to 1 for each of 100 Articles). The query complexity is 200.
 
+# Previewing content
+Accessing non-published content can be useful when you want to, for example, preview how a new article will look before publishing it and making it public to everybody. The GraphQL API gives you the control to choose whether you want to access published or non-published content in a very granular fashion.
+```preview: true```
+```
+query {
+  houseCollection (preview: true) {
+    items {
+      // "house" fields will use non published content
+      houseNumber
+      numberOfRooms
+      owner {
+        ... // content for the "owner" will also be non published
+      }
+       architect (preview: false) {
+        ... // content for the "architect" will be published
+      }
+    }
+  }
+}
+```
+- Fields in queries that require access to non-published content but fail to provide a valid preview access token will be resolved with an ACCESS_TOKEN_INVALID error.
 
+# Schema generation
+The GraphQL schema definition is generated from the content model at request time so it is always current.
 
+# Reserved type names
+Query, String, Int, Float, Boolean, Location, Circle, Rectangle, DateTime, RichText, Asset, AssetCollection, AssetLinkingCollections, AssetFilter, AssetOrder, Entry, EntryCollection, EntryOrder, Sys, SysFilter, ContentfulMetadata, ContentfulTag, ContentfulMetadataFilter, ContentfulMetadataTagsFilter, Dimension, HexColor, Quality, ImageResizeFocus, ImageResizeStrategy, ImageFormat, ImageTransformOptions, ResourceSys, ResourceLink, ResourceLinkCollection and Never.
 
+# Variable 
+👉 Variables let you pass dynamic values into a query instead of hardcoding them.
+```
+query GetUser($id: ID!)
+{
+  user(id: $id) {
+    name
+  }
+}
+```
+JSON Pass
+```
+{
+  "id": 1
+}
+```
+### How It Works
 
-
-
-
-
-
-
+- $id → variable
+- ID! → type (! = required)
+- Passed separately from query
 
 
 
