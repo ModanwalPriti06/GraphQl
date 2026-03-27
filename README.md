@@ -245,18 +245,8 @@ Schema generation fails when:
 
 You cannot change the content type ID without regenerating the content type, so be aware of these restrictions while creating your content models.
 
-
-
-
-
-
-
-
-
-
-
-
-
+# Image Transformation
+https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/image-transformations
 
 
 
