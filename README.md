@@ -248,6 +248,9 @@ You cannot change the content type ID without regenerating the content type, so 
 # Image Transformation
 https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/image-transformations
 
+# GraphQL Error
+<img width="558" height="756" alt="Screenshot 2026-03-31 at 4 37 31 PM" src="https://github.com/user-attachments/assets/67ccd9e1-fdec-414a-be1f-cdc43c5ad9d5" />
+
 
 
 
